@@ -1,61 +1,70 @@
 # GW2 Story Times for Nexus
 
-This repository contains the Raidcore Nexus port of the original BlishHUD `gw2-storytimerwidget` module.
+GW2 Story Times brings [gw2storytimes.com](https://gw2storytimes.com) into Guild Wars 2 through Raidcore Nexus. Browse community mission estimates, keep a compact timer on screen while you play, and submit your own runs back to the site without leaving the game.
 
-Current capabilities:
+## Features
 
-- Nexus addon lifecycle (`GetAddonDef`, `Load`, `Unload`)
 - Compact always-on timer widget
-- Pop-out mission browser
-- Live data loading from `api.gw2storytimes.com`
-- Stopwatch state and pacing feedback
-- Time submission support
-- GitHub-based update metadata for Nexus
+- Pop-out mission browser with live data from GW2 Story Times
+- Full Experience and Speedrun estimate views
+- Stopwatch with pacing feedback based on community averages
+- In-game time submissions tagged with `source: nexus`
 
-## Current Status
+## Installation
 
-The addon is now in a playable prototype state and uses the live GW2 Story Times API. It is still not feature-complete compared to the BlishHUD version, but the core browse / time / submit loop is in place.
+1. Install Raidcore Nexus in your Guild Wars 2 game folder.
+2. Download the latest `gw2storytimes.dll` from the [Releases](https://github.com/MattyGroch/gw2-storytimes-nexus/releases) page.
+3. Place the DLL in your Nexus addon folder.
+4. Launch Guild Wars 2 and load the addon through Nexus.
 
-Release target: `v0.1.2`
+## Using the Addon
 
-## Build
+### Timer Widget
 
-### Prerequisites
+The main Story Times widget is meant to stay on screen while you play. It shows:
 
-- Visual Studio 2022 with Desktop C++ tools
-- CMake 3.21+
-- A local Nexus SDK/include tree
+- The currently selected mission
+- The mission breadcrumb
+- Your current run time
+- The selected community estimate
+- Basic pacing feedback
 
-This repository currently defaults to the cloned reference copy in [`_reference_nexus`](./_reference_nexus), which was pulled in during scaffolding. If you want to point at a different SDK location, override these cache variables:
+Use the widget buttons to:
 
-- `NEXUS_INCLUDE_DIR`
-- `IMGUI_INCLUDE_DIR`
+- `Start` or `Pause` the timer
+- `Reset` the current run
+- `Clear` the selected mission
+- `Submit` a completed run after stopping the timer
 
-### Configure
+The default toggle hotkey is `ALT+SHIFT+T`.
 
-Use a Visual Studio Developer Command Prompt, or run `VsDevCmd.bat` before building from a normal shell.
+### Mission Browser
 
-```powershell
-cmake -S . -B build -G "NMake Makefiles"
-cmake --build build
-```
+Click `Browse Missions` on the widget to open the larger mission browser.
 
-For release builds:
+From there you can:
 
-```powershell
-cmake -S . -B build-release -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release
-cmake --build build-release
-```
+- Browse seasons in story order
+- Search missions by mission, story, or season name
+- Switch between Full Experience and Speedrun estimates
+- Select a mission and load it into the timer widget
 
-The release addon DLL will be produced as `build-release/gw2storytimes.dll`.
+### Submitting Times
 
-## Porting Roadmap
+After stopping a run between 1 and 480 minutes, the `Submit` button becomes available.
 
-1. Add persistent settings for window visibility, preferred category, and default submission behavior.
-2. Register a Quick Access shortcut with addon icon assets.
-3. Read Mumble/Nexus character context so My Story race filtering behaves like the BlishHUD module.
-4. Improve browser presentation to preserve story grouping and chapter headers visually.
-5. Package and test inside a local Nexus install.
+You can submit your run as:
+
+- `Full Experience`
+- `Speedrun`
+
+Submission data is sent to the GW2 Story Times API and tagged as coming from Nexus.
+
+## Notes
+
+- This addon uses live data from `api.gw2storytimes.com`
+- Some BlishHUD-era features are still planned for the Nexus port
+- If a submission fails, the widget will show the API error message directly
 
 ## Source Reference
 
